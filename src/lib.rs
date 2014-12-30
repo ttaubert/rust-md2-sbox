@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+#![feature(slicing_syntax)]
+
 use std::iter::range_inclusive;
 
 static PI: [u8, ..722] = [
@@ -118,6 +120,6 @@ mod test {
 
   #[test]
   fn test() {
-    assert_eq!(SBOX.as_slice(), compute().as_slice());
+    assert_eq!(SBOX[], compute()[]);
   }
 }
