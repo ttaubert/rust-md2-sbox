@@ -4,9 +4,7 @@
 
 #![feature(slicing_syntax)]
 
-use std::iter::range_inclusive;
-
-static PI: [u8, ..722] = [
+static PI: [u8; 722] = [
   3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3,
   8, 3, 2, 7, 9, 5, 0, 2, 8, 8, 4, 1, 9, 7, 1, 6, 9, 3, 9, 9, 3, 7, 5, 1, 0, 5,
   8, 2, 0, 9, 7, 4, 9, 4, 4, 5, 9, 2, 3, 0, 7, 8, 1, 6, 4, 0, 6, 2, 8, 6, 2, 0,
@@ -38,7 +36,7 @@ static PI: [u8, ..722] = [
 ];
 
 struct Rand {
-  idx: uint
+  idx: usize
 }
 
 impl Rand {
@@ -46,14 +44,14 @@ impl Rand {
     Rand { idx: 0 }
   }
 
-  fn next_digit(&mut self) -> uint {
+  fn next_digit(&mut self) -> usize {
     self.idx += 1;
-    PI[self.idx - 1] as uint
+    PI[self.idx - 1] as usize
   }
 
-  pub fn next(&mut self, n: uint) -> uint {
+  pub fn next(&mut self, n: usize) -> usize {
     let mut x = self.next_digit();
-    let mut y = 10u;
+    let mut y = 10us;
 
     if n > 10 {
       x = (x * 10) + self.next_digit();
@@ -70,18 +68,18 @@ impl Rand {
   }
 }
 
-pub fn compute() -> [u8, ..256] {
-  let mut state = [0u8, ..256];
+pub fn compute() -> [u8; 256] {
+  let mut state = [0u8; 256];
 
   // Initialize state to [0, 1, 2, .., 255].
-  for i in range(1u, 256u) {
+  for i in 1..256 {
     state[i] = i as u8;
   }
 
   let mut r = Rand::new();
 
   // Perform "random" swaps.
-  for i in range_inclusive(2u, 256u) {
+  for i in 2..257 {
     state.swap(i - 1, r.next(i));
   }
 
@@ -93,7 +91,7 @@ mod test {
   use compute;
 
   // S-box as given in RFC 1319.
-  static SBOX: [u8, ..256] = [
+  static SBOX: [u8; 256] = [
     0x29, 0x2e, 0x43, 0xc9, 0xa2, 0xd8, 0x7c, 0x01, 0x3d, 0x36, 0x54, 0xa1,
     0xec, 0xf0, 0x06, 0x13, 0x62, 0xa7, 0x05, 0xf3, 0xc0, 0xc7, 0x73, 0x8c,
     0x98, 0x93, 0x2b, 0xd9, 0xbc, 0x4c, 0x82, 0xca, 0x1e, 0x9b, 0x57, 0x3c,
@@ -120,6 +118,6 @@ mod test {
 
   #[test]
   fn test() {
-    assert_eq!(SBOX[], compute()[]);
+    assert_eq!(SBOX.to_vec(), compute().to_vec());
   }
 }
