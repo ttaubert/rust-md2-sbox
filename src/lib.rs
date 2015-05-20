@@ -2,8 +2,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#![feature(slicing_syntax)]
-
 static PI: [u8; 722] = [
   3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3,
   8, 3, 2, 7, 9, 5, 0, 2, 8, 8, 4, 1, 9, 7, 1, 6, 9, 3, 9, 9, 3, 7, 5, 1, 0, 5,
@@ -51,7 +49,7 @@ impl Rand {
 
   pub fn next(&mut self, n: usize) -> usize {
     let mut x = self.next_digit();
-    let mut y = 10us;
+    let mut y = 10usize;
 
     if n > 10 {
       x = (x * 10) + self.next_digit();
